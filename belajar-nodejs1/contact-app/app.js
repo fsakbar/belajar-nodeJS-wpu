@@ -1,10 +1,10 @@
 // Core Module
   // FIle System
     // import * as fs from 'node:fs';
-    const fs = require('node:fs')
+    const { reject } = require('lodash');
+const fs = require('node:fs');
+const { resolve } = require('node:path');
     console.log(fs)
-
-
 
   // Readline
     const readline = require('node:readline');
@@ -23,17 +23,47 @@
         fs.writeFileSync(dataPath, '[]', 'utf-8')
     }
 
-    rl.question('What is your name? ', (name)=> {
-        rl.question('What is your Number? ', (number)=> {
-        const contact = {name: name, number: number}
+    // rl.question('What is your name? ', (name)=> {
+    //     rl.question('What is your Number? ', (number)=> {
+    //     const contact = {name: name, number: number}
+    //     const readFile = fs.readFileSync('data/contacts.json', 'utf8')
+    //     const contacts = JSON.parse(readFile);
+    //     contacts.push(contact);
+    //     fs.writeFileSync('data/contacts.json', JSON.stringify(contacts))
+    //     console.log(`Thank For Your Feedback. Name: ${name}, Number: ${number}`)
+    //     rl.close();
+    //     })
+    // })
+
+    const pertanyaan = (pertanyaan) => {
+        return new Promise((resolve, reject) => {
+            rl.question('Masukan Nama: ', (name) => {
+                resolve(name)
+            })
+        })
+    }
+
+    // const pertanyaan2 = () => {
+    //     return new Promise((resolve, reject) => {
+    //         rl.question('Masukan Email: ', (nama) => {
+    //             resolve(nama)
+    //         })
+    //     })
+    // }
+
+    const main = async() => {
+        const name = await pertanyaan('Masukan Nama Anda: ')
+        const email = await pertanyaan('Masukan Email Anda: ')
+        const contact = {name: name, email: email}
         const readFile = fs.readFileSync('data/contacts.json', 'utf8')
         const contacts = JSON.parse(readFile);
         contacts.push(contact);
         fs.writeFileSync('data/contacts.json', JSON.stringify(contacts))
-        console.log(`Thank For Your Feedback. Name: ${name}, Number: ${number}`)
+        console.log(`Thank For Your Feedback. Name: ${name}, Number: ${email}`)
         rl.close();
-        })
-    })
+    }
+
+    main()
 
 
 
