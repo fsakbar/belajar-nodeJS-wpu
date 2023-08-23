@@ -1,0 +1,19 @@
+{
+  "name": "contact-app",
+  "version": "1.0.0",
+  "description": "Membuat Aplikasi Kontak",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Muhammad Aulia Akbar",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "yargs": "^16.2.0"
+  }
+}
