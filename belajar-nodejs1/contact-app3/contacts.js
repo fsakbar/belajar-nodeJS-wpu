@@ -57,10 +57,18 @@
     //     })
     // }
 
+  // Fungsi Load Contact
+    const loadContact = () => {
+      const readFile = fs.readFileSync('data/contacts.json', 'utf8')
+      const contacts = JSON.parse(readFile);
+      return contacts
+    }
+
     const simpanContact = (name, email, number) => {
         const contact = {name: name, email: email, number:number}
-        const readFile = fs.readFileSync('data/contacts.json', 'utf8')
-        const contacts = JSON.parse(readFile);
+
+        // Load Contact
+        const contacts = loadContact()
 
         // Cek Duplikat
         const duplikatname = contacts.find((contact) => contact.name === name)
@@ -85,13 +93,17 @@
           console.log(chalk.red.inverse.bold('Nomor HP  Tidak Sesuai Format'))
           return false // Keluar
         }
-      
-
-
         contacts.push(contact);
         fs.writeFileSync('data/contacts.json', JSON.stringify(contacts))
         console.log(chalk.green.inverse.bold(`Thank For Your Feedback. Name: ${name}, Email: ${email}, Number: ${number}`))
     }
 
+    const listContacts = () => {
+      const contacts = loadContact();
+      contacts.forEach((contact, i) => {
+        console.log(`${i+1}.${contact.name} - ${contact.number}`)
+      })
+    }
 
-module.exports = { simpanContact}
+
+module.exports = {simpanContact, listContacts}
