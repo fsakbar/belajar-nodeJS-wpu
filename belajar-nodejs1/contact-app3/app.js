@@ -27,14 +27,7 @@ yargs
         },      
         handler(argv){
             contacts.simpanContact(argv.name, argv.email, argv.number)
-            // const contact = {
-            //     nama: argv.nama,
-            //     email: argv.email,
-            //     number: argv.number
-            // }
-            // console.log(contact)
     }
-    
     })
     .demandCommand()
 
@@ -55,7 +48,7 @@ yargs
 yargs
     .command({
         command: 'detail',
-        describe: 'Menambahkan Detail dari sebuah Contact berdasarkan nama',
+        describe: 'Menampilkan Detail dari sebuah Contact berdasarkan nama',
         builder:{
             name: {
                 describe: 'Nama Lengkap',
@@ -65,6 +58,24 @@ yargs
         },
         handler(argv){
             contacts.detailContact(argv.name)
+        }
+    })
+
+
+// menghapus sebuah contact
+yargs
+    .command({
+        command: 'delete',
+        describe: 'Menghapus Sebuah Contact berdasarkan nama',
+        builder: {
+            name: {
+                describe: 'Nama lengkap',
+                demandCommand: true,
+                type: 'string',
+            }
+        },
+        handler(argv){
+            contacts.deleteContact(argv.name)
         }
     })
 

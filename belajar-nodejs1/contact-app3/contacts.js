@@ -16,7 +16,7 @@
 
   // Validator
     const validator = require('validator');
-const { argv } = require('node:process');
+    const { argv } = require('node:process');
 
   //Membuat Folder Jika Belum Ada
     const dirPath = './data'
@@ -61,11 +61,12 @@ const { argv } = require('node:process');
   // Fungsi Load Contact
     const loadContact = () => {
       const readFile = fs.readFileSync('data/contacts.json', 'utf8')
-      const contacts = JSON.parse(readFile);
+      const contacts = JSON.parse(readFile); // JSON.parse
       return contacts
     }
 
     const simpanContact = (name, email, number) => {
+        // Membuat Object
         const contact = {name: name, email: email, number:number}
 
         // Load Contact
@@ -74,6 +75,8 @@ const { argv } = require('node:process');
         // Cek Duplikat
         const duplikatname = contacts.find((contact) => contact.name === name)
         const duplikatnumber = contacts.find((contact) => contact.number === number)
+
+        // Cek Duplikat Menggunakan Pengkondisian
         if (duplikatname){
           console.log(chalk.red.inverse.bold('Nama Contact Sudah Terdaptar, Gunakan Nama Lain'))
           return false; // Keluar
@@ -99,6 +102,7 @@ const { argv } = require('node:process');
         console.log(chalk.green.inverse.bold(`Thank For Your Feedback. Name: ${name}, Email: ${email}, Number: ${number}`))
     }
 
+
     const listContacts = () => {
       const contacts = loadContact();
       contacts.forEach((contact, i) => {
@@ -106,15 +110,41 @@ const { argv } = require('node:process');
       })
     }
 
-    const detailContact = () => {
+
+    // Ada Kesalahan
+    const detailContact = (name) => {
       const contacts = loadContact();
-      const contact = contacts.find = contacts((contact) => contact.name.toLowerCase() === name.toLowerCase())
+      const contact = contacts.find((contact) => contact.name.toLowerCase() === name.toLowerCase())
 
       if(!contact){
         console.log(chalk.red.inverse.bold('Nama Yang Anda Inputkan Tidak Ada, Gunakan Nama Lain'))
         return false; //Keluar
       }
+      console.log(chalk.blueBright.inverse.bold(`Nama: ${contact.name}`))
+      console.log(chalk.blueBright.inverse.bold(`No HP: ${contact.number}`))
+      if(contact.email){
+        console.log(chalk.blueBright.inverse.bold(`No HP: ${contact.email}`))
+      }
+      console.log(chalk.blueBright.inverse.bold(`No HP: ${contact.number}`))
     }
 
 
-module.exports = {simpanContact, listContacts, detailContact}
+    const deleteContact = (name) => {
+      const contacts = loadContact();
+      const newContacts = contacts.filter((contact) => contact.name.toLowerCase() !== name.toLowerCase())
+
+      if(contacts.length === newContacts.length){
+        console.log(chalk.red.inverse.bold('Nama Yang Anda Inputkan Tidak Ditemukan, Gunakan Nama Lain'))
+        return false; //Keluar
+      }
+
+      fs.writeFileSync('data/contacts.json', JSON.stringify(newContacts))
+      console.log(chalk.green.inverse.bold( `data ${name} berhasil dihapus`))
+
+
+
+      // Fungsi Delete
+    }
+
+
+module.exports = {simpanContact, listContacts, detailContact, deleteContact}
