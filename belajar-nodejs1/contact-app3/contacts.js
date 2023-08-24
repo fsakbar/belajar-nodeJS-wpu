@@ -58,7 +58,7 @@
     //     })
     // }
 
-  // Fungsi Load Contact
+    // Fungsi Load Contact
     const loadContact = () => {
       const readFile = fs.readFileSync('data/contacts.json', 'utf8')
       const contacts = JSON.parse(readFile); // JSON.parse
@@ -110,8 +110,6 @@
       })
     }
 
-
-    // Ada Kesalahan
     const detailContact = (name) => {
       const contacts = loadContact();
       const contact = contacts.find((contact) => contact.name.toLowerCase() === name.toLowerCase())
@@ -129,6 +127,7 @@
     }
 
 
+    // Fungsi Delete
     const deleteContact = (name) => {
       const contacts = loadContact();
       const newContacts = contacts.filter((contact) => contact.name.toLowerCase() !== name.toLowerCase())
@@ -140,10 +139,6 @@
 
       fs.writeFileSync('data/contacts.json', JSON.stringify(newContacts))
       console.log(chalk.green.inverse.bold( `data ${name} berhasil dihapus`))
-
-
-
-      // Fungsi Delete
     }
 
 

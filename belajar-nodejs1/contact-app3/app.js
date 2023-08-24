@@ -1,7 +1,10 @@
 const yargs = require("yargs")
 const contacts = require("./contacts")
+
+
 // Mengambil Argumen Dari Command Line
 // console.log(yargs.argv)
+
 
 // Membuat Yargs Command
 yargs
@@ -30,6 +33,7 @@ yargs
     }
     })
     .demandCommand()
+
 
 // menampilkan daftar semua nama contact
 yargs

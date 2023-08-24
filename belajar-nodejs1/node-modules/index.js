@@ -1,5 +1,5 @@
 // const fs = require('fs')// Core Modules
-// const cetakNama = require('./coba') // Local Modules
+// const cetakNama = require('./coba') // Local Modules // Modul Yang Dibuat Sendiri. Modul Ini Mirip Seperti export import dalam ES6
 // const moment = require('moment'); // Third Party Modules / NPM Modules / di dalam folder node_modules
 
 const coba = require('./coba')

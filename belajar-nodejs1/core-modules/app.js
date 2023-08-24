@@ -4,6 +4,8 @@
     const fs = require('node:fs')
     console.log(fs)
 
+  // Fungsi fs mengakses file txt ataumungkin file apapun di dalam folder yang sama (sejauh yang saya tahu)
+
     // Menuliskan string ke dalam sebuah file (synchnous)
       // jika file sudah ada maka isinya akan ditimpa
       // Menampung Error dapat menggunakan blok try catch
@@ -40,7 +42,7 @@
   const { buffer } = require('stream/consumers');
   const rl = readline.createInterface({input: process.stdin, output: process.stdout});
 
-  // Simple Readline
+  // Simple Readline File Sebelumnya
   // rl.question('What do you think of Node.js? ', (answer) => {
   //   rl.question('What is your name? ', (name) => {
   //     console.log(`Thank You for your valuable feedback: ${answer} Your Name ${name}`)
