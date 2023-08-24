@@ -15,7 +15,8 @@
     const chalk = require('chalk')
 
   // Validator
-    const validator = require('validator')
+    const validator = require('validator');
+const { argv } = require('node:process');
 
   //Membuat Folder Jika Belum Ada
     const dirPath = './data'
@@ -105,5 +106,15 @@
       })
     }
 
+    const detailContact = () => {
+      const contacts = loadContact();
+      const contact = contacts.find = contacts((contact) => contact.name.toLowerCase() === name.toLowerCase())
 
-module.exports = {simpanContact, listContacts}
+      if(!contact){
+        console.log(chalk.red.inverse.bold('Nama Yang Anda Inputkan Tidak Ada, Gunakan Nama Lain'))
+        return false; //Keluar
+      }
+    }
+
+
+module.exports = {simpanContact, listContacts, detailContact}
