@@ -16,3 +16,4 @@ const pesan = chalk `Lorem, ipsum dolor {bgRed.black.bold Akbar}`
 console.log(chalk.bgCyanBright.red(nama))
 console.log(chalk.bgMagenta.blue(nama))
 console.log(pesan)
+
