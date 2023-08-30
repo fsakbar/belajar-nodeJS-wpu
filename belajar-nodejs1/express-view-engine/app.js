@@ -41,7 +41,7 @@ app.get('/about', (req, res) => {
 
   // Menggunakan View Engin ejs
   res.render('about', {
-    title: 'halaman about',
+    title: 'Halaman About',
     layout: 'layouts/main-layout'})
 })
 app.get('/contact', (req, res) => {
@@ -49,7 +49,7 @@ app.get('/contact', (req, res) => {
 
   // Menggunakan View Engin ejs
   res.render('contact', {
-    title: 'halaman contact',
+    title: 'Halaman Contact',
     layout: 'layouts/main-layout'})
 })
 
