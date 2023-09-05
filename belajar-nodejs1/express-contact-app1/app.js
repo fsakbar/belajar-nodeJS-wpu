@@ -1,6 +1,7 @@
 const express = require('express')
-const expressLayouts = require('express-ejs-layouts') // Termasuk Third Party Middleware
-const morgan = require('morgan') // Termasuk Third Party Middleware
+const expressLayouts = require('express-ejs-layouts') // Termasuk Third Party Middleware 
+const {loadContact, findContact} = require('./utils/contacts')
+
 const app = express()
 const port = 3000
 
@@ -10,18 +11,6 @@ app.use(expressLayouts);
 
 // Built in Middleware Agar Kita Dapat Permisi Mengakses Asset dalam Code 
 app.use(express.static('public'))
-
-
-// Application Level Middleware
-app.use((req, res, next) => {
-  console.log('Time:', Date.now())
-  next() // next perlu di jalankan agar aplikasi tidak hanging
-})
-
-// Third Party Middleware
-app.use(morgan('dev'))
-
-
 
 const mahasiswa = [
   {
@@ -47,9 +36,23 @@ app.get('/', (req, res) => {
     nama: 'Muhammad Aulia Akbar',
     title: 'Halaman Utama',
     mahasiswa: mahasiswa,
+    layout: 'layouts/main-layout',
+    
+  })
+})
+
+app.get('/home', (req, res) => {
+  // res.sendFile('./index.html', {root: __dirname,  })
+
+  // Menggunakan View Engin ejs
+  res.render('home', {
+    nama: 'Muhammad Aulia Akbar',
+    title: 'Halaman Utama',
+    mahasiswa: mahasiswa,
     layout: 'layouts/main-layout'
   })
 })
+
 app.get('/about', (req, res, next) => {
   // res.sendFile('./about.html', {root: __dirname,  })
 
@@ -58,13 +61,25 @@ app.get('/about', (req, res, next) => {
     title: 'Halaman About',
     layout: 'layouts/main-layout'})
 })
-app.get('/contact', (req, res) => {
-  // res.sendFile('./contact.html', {root: __dirname,  })
 
+app.get('/contact', (req, res) => {
   // Menggunakan View Engin ejs
+  const contacts = loadContact(); 
   res.render('contact', {
     title: 'Halaman Contact',
-    layout: 'layouts/main-layout'})
+    layout: 'layouts/main-layout',
+    contacts,
+  })
+})
+
+app.get('/contact/:nama', (req, res) => {
+  // Menggunakan View Engin ejs
+  const contact = findContact(req.params.nama)
+  res.render('detail', {
+    title: 'Halaman Detail Contact',
+    layout: 'layouts/main-layout',
+    contact,
+  })
 })
 
 app.get('/json', (req, res) => {
@@ -79,13 +94,7 @@ app.get('/indexsendfile', (req, res) => {
   res.sendFile('./index.html', {root: __dirname,  })
 })
 
-app.get('/category/:idCategory/product/:idProduct', (req, res) => {
-  res.send(`Barangi Ini Memiliki IDCategori ${req.params.idCategory} dan IDProduct ${req.params.idProduct}` )
-})
 
-app.get('product/:idProduct', (req, res) => {
-  res.send(`Barangi Ini Memiliki IDCategori ${req.query.category} dan IDProduct ${req.params.idProduct}` )
-})
 
 app.use('/', (req, res) => {
   res.status(404)

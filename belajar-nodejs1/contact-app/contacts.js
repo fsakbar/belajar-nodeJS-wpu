@@ -23,17 +23,6 @@
         fs.writeFileSync(dataPath, '[]', 'utf-8')
     }
 
-    // rl.question('What is your name? ', (name)=> {
-    //     rl.question('What is your Number? ', (number)=> {
-    //     const contact = {name: name, number: number}
-    //     const readFile = fs.readFileSync('data/contacts.json', 'utf8')
-    //     const contacts = JSON.parse(readFile);
-    //     contacts.push(contact);
-    //     fs.writeFileSync('data/contacts.json', JSON.stringify(contacts))
-    //     console.log(`Thank For Your Feedback. Name: ${name}, Number: ${number}`)
-    //     rl.close();
-    //     })
-    // })
 
     const tulisPertanyaan = (pertanyaan) => {
         return new Promise((resolve, reject) => {
@@ -42,15 +31,6 @@
             })
         })
     }
-
-    // const pertanyaan2 = () => {
-    //     return new Promise((resolve, reject) => {
-    //         rl.question('Masukan Email: ', (nama) => {
-    //             resolve(nama)
-    //         })
-    //     })
-    // }
-
     const simpanContact = (name, email, number) => {
         const contact = {name: name, email: email, number:number}
         const readFile = fs.readFileSync('data/contacts.json', 'utf8')

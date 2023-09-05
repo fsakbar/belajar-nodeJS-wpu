@@ -3,7 +3,7 @@ const contacts = require("./contacts")
 // Mengambil Argumen Dari Command Line
 // console.log(yargs.argv)
 
-// Membuat Yargs Command
+// Membuat Yargs Command=
 yargs
     .command({
     command: 'add',
@@ -26,12 +26,6 @@ yargs
         },
     },      
     handler(argv){
-    // const contact = {
-    //     nama: argv.nama,
-    //     email: argv.email,
-    //     number: argv.number
-    // }
-    // console.log(contact)
     contacts.simpanContact(argv.name, argv.email, argv.number)
     }
 
