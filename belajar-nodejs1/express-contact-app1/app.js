@@ -30,7 +30,6 @@ const mahasiswa = [
 
 app.get('/', (req, res) => {
   // res.sendFile('./index.html', {root: __dirname,  })
-
   // Menggunakan View Engin ejs
   res.render('index', {
     nama: 'Muhammad Aulia Akbar',
@@ -43,7 +42,6 @@ app.get('/', (req, res) => {
 
 app.get('/home', (req, res) => {
   // res.sendFile('./index.html', {root: __dirname,  })
-
   // Menggunakan View Engin ejs
   res.render('home', {
     nama: 'Muhammad Aulia Akbar',
@@ -55,7 +53,6 @@ app.get('/home', (req, res) => {
 
 app.get('/about', (req, res, next) => {
   // res.sendFile('./about.html', {root: __dirname,  })
-
   // Menggunakan View Engin ejs
   res.render('about', {
     title: 'Halaman About',
@@ -90,16 +87,17 @@ app.get('/json', (req, res) => {
   })
 })
 
+
 app.get('/indexsendfile', (req, res) => {
   res.sendFile('./index.html', {root: __dirname,  })
 })
-
 
 
 app.use('/', (req, res) => {
   res.status(404)
   res.send('Page Not Found For You')
 })
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
