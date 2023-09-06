@@ -153,18 +153,18 @@ app.get('/contact/:nama', (req, res) => {
   })
 })
 
-app.get('/json', (req, res) => {
-  res.json({
-    nama: 'Cornelia Vanisa',
-    email: 'cornelia@gmail.com',
-    number: '0811351660865'
-  })
-})
+// app.get('/json', (req, res) => {
+//   res.json({
+//     nama: 'Cornelia Vanisa',
+//     email: 'cornelia@gmail.com',
+//     number: '0811351660865'
+//   })
+// })
 
 
-app.get('/indexsendfile', (req, res) => {
-  res.sendFile('./index.html', {root: __dirname,  })
-})
+// app.get('/indexsendfile', (req, res) => {
+//   res.sendFile('./index.html', {root: __dirname,  })
+// })
 
 
 app.use('/', (req, res) => {
