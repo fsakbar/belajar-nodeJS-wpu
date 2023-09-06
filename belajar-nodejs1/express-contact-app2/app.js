@@ -3,7 +3,7 @@ const expressLayouts = require('express-ejs-layouts') // Termasuk Third Party Mi
 const {loadContact, findContact, addContact, cekDuplikat} = require('./utils/contacts')
 const { body, validationResult, check } = require('express-validator')
 
-const session = require('express-sesion')
+const session = require('express-session')
 
 const cookie = require('cookie-parser')
 
@@ -90,7 +90,7 @@ app.get('/contact', (req, res) => {
     title: 'Halaman Contact',
     layout: 'layouts/main-layout',
     contacts,
-    msg: req.flash()
+    msg: req.flash('msg')
   })
 })
 
@@ -135,7 +135,6 @@ app.post('/contact', [
 
     // Mengirimkan Flash Message
     req.flash('msg', 'Data Contact Berhasil Ditambahkan')
-
     res.redirect('./contact')
   }
 
