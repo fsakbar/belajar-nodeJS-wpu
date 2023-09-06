@@ -11,6 +11,8 @@ app.use(expressLayouts);
 
 // Built in Middleware Agar Kita Dapat Permisi Mengakses Asset dalam Code 
 app.use(express.static('public'))
+app.use(express.urlencoded({extended: true}))
+
 
 const mahasiswa = [
   {
