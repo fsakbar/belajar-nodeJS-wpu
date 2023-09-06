@@ -3,6 +3,9 @@
     const fs = require('node:fs');
     const { resolve } = require('node:path');
 
+  // Validator
+    const validator = require('express-validator')
+
   //Membuat Folder Jika Belum Ada
     const dirPath = './data'
     if(!fs.existsSync(dirPath)){
@@ -42,5 +45,11 @@
       saveContacts(contacts)
     }
 
+    // cek nama yang duplikat
+    const cekDuplikat = (nama) => {
+      const contacts = loadContact()
+      return contacts.find((contact) => contact.nama === nama)
+    }
 
-    module.exports = {loadContact, findContact, addContact}
+
+    module.exports = {loadContact, findContact, addContact, cekDuplikat}

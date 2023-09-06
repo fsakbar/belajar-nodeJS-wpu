@@ -1,6 +1,14 @@
 const express = require('express')
 const expressLayouts = require('express-ejs-layouts') // Termasuk Third Party Middleware 
-const {loadContact, findContact, addContact} = require('./utils/contacts')
+const {loadContact, findContact, addContact, cekDuplikat} = require('./utils/contacts')
+const { body, validationResult, check } = require('express-validator')
+
+const session = require('express-sesion')
+
+const cookie = require('cookie-parser')
+
+const flash = require('connect-flash')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 const port = 3000
@@ -14,7 +22,7 @@ app.use(express.static('public'))
 
 
 // Midleware untuk memparsing data kejson, merupakan built in middleware
-app.use(express.urlencoded())
+app.use(express.urlencoded({extended: true}))
 
 const mahasiswa = [
   {
@@ -30,6 +38,18 @@ const mahasiswa = [
     email: 'akbar@mail.com'
   }
 ]
+
+
+// Konfiguarsi Flash
+app.use(cookieParser('secret'))
+app.use(session({
+  cookie: {maxAge: 6000},
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+})) 
+app.use(flash())
+
 
 
 app.get('/', (req, res) => {
@@ -70,6 +90,7 @@ app.get('/contact', (req, res) => {
     title: 'Halaman Contact',
     layout: 'layouts/main-layout',
     contacts,
+    msg: req.flash()
   })
 })
 
@@ -86,9 +107,39 @@ app.get('/contact/add', (req, res) => {
 })
 
 // Proses Menambahkan  Data Contact
-app.post('/contact', (req, res) => {
-  addContact(req.body)
-  res.redirect('./contact')
+app.post('/contact', [
+  body('nama').custom((value) => {
+    const duplikat = cekDuplikat(value)
+    if (duplikat){
+      throw new Error('Nama kontak sudah digunakan')
+    }
+    return true
+  }),
+  check('email', 'Email Tidak Valid').isEmail(),
+  check('nohp', 'No HP Tidak Valid').isMobilePhone('id-ID')
+
+], (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()){
+
+    // return res.status(400).json({errors: errors.array()})
+
+    res.render('add-contact', {
+      title: 'Form Tambah Data Contact',
+      layout: 'layouts/main-layout',
+      errors: errors.array(),
+    })
+
+  } else {
+    addContact(req.body)
+
+    // Mengirimkan Flash Message
+    req.flash('msg', 'Data Contact Berhasil Ditambahkan')
+
+    res.redirect('./contact')
+  }
+
+
 })
 
 
