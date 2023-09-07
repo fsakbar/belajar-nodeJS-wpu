@@ -36,6 +36,10 @@ const mahasiswa = [
   {
     nama: 'Akbar',
     email: 'akbar@mail.com'
+  },
+  {
+    nama: 'Juan',
+    email: 'juan@mail.com'
   }
 ]
 
@@ -208,6 +212,7 @@ app.post('/contact/update', [
 })
 
 
+
 // Halaman Detil Contact
 app.get('/contact/:nama', (req, res) => {
   // Menggunakan View Engin ejs
@@ -218,7 +223,6 @@ app.get('/contact/:nama', (req, res) => {
     contact,
   })
 })
-
 
 
 
