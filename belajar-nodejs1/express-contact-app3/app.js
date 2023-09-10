@@ -4,23 +4,19 @@ const {loadContact, findContact, addContact, cekDuplikat, deleteContact, updateC
 const { body, validationResult, check } = require('express-validator')
 
 const session = require('express-session')
-
-const cookie = require('cookie-parser')
-
 const flash = require('connect-flash')
 const cookieParser = require('cookie-parser')
 
 const app = express()
 const port = 3000
 
+
+//EJS
 // Express menggunakan view engine EJS // Termasuk Third Party Middleware
 app.set('view engine', 'ejs')
 app.use(expressLayouts); 
-
 // Built in Middleware Agar Kita Dapat Permisi Mengakses Asset dalam Code 
 app.use(express.static('public'))
-
-
 // Midleware untuk memparsing data kejson, merupakan built in middleware
 app.use(express.urlencoded({extended: true}))
 
@@ -68,6 +64,7 @@ app.get('/', (req, res) => {
   })
 })
 
+
 app.get('/home', (req, res) => {
   // res.sendFile('./index.html', {root: __dirname,  })
   // Menggunakan View Engin ejs
@@ -79,6 +76,7 @@ app.get('/home', (req, res) => {
   })
 })
 
+
 app.get('/about', (req, res, next) => {
   // res.sendFile('./about.html', {root: __dirname,  })
   // Menggunakan View Engin ejs
@@ -86,6 +84,7 @@ app.get('/about', (req, res, next) => {
     title: 'Halaman About',
     layout: 'layouts/main-layout'})
 })
+
 
 app.get('/contact', (req, res) => {
   // Menggunakan View Engin ejs
@@ -102,13 +101,13 @@ app.get('/contact', (req, res) => {
 // Halaman Form Tambah Data COntact
 app.get('/contact/add', (req, res) => {
   // Menggunakan View Engine ejs
-  
   res.render('add-contact', {
     title: 'From Tambah Data Contact',
     layout: 'layouts/main-layout',
     // contact,
   })
 })
+
 
 // Proses Menambahkan  Data Contact
 app.post('/contact', [
@@ -125,9 +124,7 @@ app.post('/contact', [
 ], (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()){
-
     // return res.status(400).json({errors: errors.array()})
-
     res.render('add-contact', {
       title: 'Form Tambah Data Contact',
       layout: 'layouts/main-layout',
@@ -136,13 +133,10 @@ app.post('/contact', [
 
   } else {
     addContact(req.body)
-
     // Mengirimkan Flash Message
     req.flash('msg', 'Data Contact Berhasil Ditambahkan')
     res.redirect('/contact')
   }
-
-
 })
 
 
@@ -207,11 +201,7 @@ app.post('/contact/update', [
     req.flash('msg', 'Data Contact Berhasil DiUbah')
     res.redirect('/contact')
   }
-
-
 })
-
-
 
 // Halaman Detil Contact
 app.get('/contact/:nama', (req, res) => {
@@ -224,13 +214,10 @@ app.get('/contact/:nama', (req, res) => {
   })
 })
 
-
-
 app.use('/', (req, res) => {
   res.status(404)
   res.send('Page Not Found For You')
 })
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
